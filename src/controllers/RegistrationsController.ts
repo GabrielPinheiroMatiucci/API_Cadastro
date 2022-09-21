@@ -32,6 +32,7 @@ class RegistrationsController {
       const response = await this.service.createRegistration({
         name: req.body.name,
         cpf: req.body.cpf,
+        phoneNumber: req.body.phoneNumber,
       });      
 
       if (!response) {
