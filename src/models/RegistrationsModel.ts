@@ -31,8 +31,8 @@ class RegistrationsModel {
         return 'CPF já cadastrado';
       } else {
         const response: any = await this.connection.execute(
-          'INSERT INTO tb_registrations (nm_person, cd_cpf) VALUES (?, ?);',
-          [registration.name, registration.cpf],
+          'INSERT INTO tb_registrations (nm_person, cd_cpf, cd_phone_number) VALUES (?, ?, ?);',
+          [registration.name, registration.cpf, registration.phoneNumber],
         );
 
         return response[0].affectedRows === 1 ? true : null;
