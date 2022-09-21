@@ -1,5 +1,6 @@
 import connection from './connection';
 import IRegistration from '../interfaces/IRegistration';
+import { registrationsQueries as queries } from '../queries';
 
 class RegistrationsModel {
   private connection;
@@ -11,7 +12,7 @@ class RegistrationsModel {
   public async getRegistrations() {
     try {
       const registrations = await this.connection.execute(
-        'SELECT * FROM tb_registrations;',
+        queries.selectAllRegistrations,
       );
   
       return registrations[0];
@@ -23,7 +24,7 @@ class RegistrationsModel {
   public async createRegistration(registration: IRegistration) {
     try {
       const thereIsCpf: any = await this.connection.execute(
-        'SELECT cd_registration FROM tb_registrations WHERE cd_cpf = ?;',
+        queries.selectRegistration,
         [registration.cpf]
       );
 
@@ -31,7 +32,7 @@ class RegistrationsModel {
         return 'CPF já cadastrado';
       } else {
         const response: any = await this.connection.execute(
-          'INSERT INTO tb_registrations (nm_person, cd_cpf, cd_phone_number) VALUES (?, ?, ?);',
+          queries.insertRegistration,
           [registration.name, registration.cpf, registration.phoneNumber],
         );
 
